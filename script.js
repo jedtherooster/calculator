@@ -1,15 +1,19 @@
-let num1 = 0;
-let num2 = 0;
-let operator = "";
+let num1 = "";
+let num2 = "";
+let total = 0;
+let selectedOperator = "";
 
 const screenText = document.querySelector(".screen h2");
 const clearButton = document.querySelector(".clear");
+const equalsButton = document.querySelector(".equals");
 
 const operators = document.querySelectorAll(".operator");
 operators.forEach((operator) => {
     operator.addEventListener("click", () => {
+        console.log(operator.textContent);
+        selectedOperator = operator.textContent;
         operator.classList.add("clicked");
-    })
+    });
 });
 
 
@@ -21,24 +25,48 @@ buttons.forEach((button) => {
             operators.forEach((operator) => {
                 if (operator.classList.contains("clicked")) {
                     operator.classList.remove("clicked");
-                    clearScreen();
+                    screenText.textContent = "";
                 }
             });
-            screenText.textContent += button.id;
+            if (selectedOperator === "") {
+                num1 += button.id;
+                screenText.textContent = num1;
+            } else {
+                num2 += button.id;
+                screenText.textContent = num2;
+                previewCalculate();
+            }
+            
         });
     }
 });
 
 
-
 clearButton.addEventListener("click", clearScreen);
+
+equalsButton.addEventListener("click", finalCalculate);
+
+function previewCalculate() {
+    if (num1 !== "" && num2 !== "") {
+        total = operate(+num1, +num2, selectedOperator);
+    }
+}
+
+function finalCalculate() {
+   previewCalculate();
+   num1 = total;
+   num2 = "";
+   screenText.textContent = total;
+   selectedOperator = "";
+}
 
 
 function clearScreen() {
     screenText.textContent = "";
-    num1 = 0;
-    num2 = 0;
-    operator = "";
+    num1 = ""
+    num2 = ""
+
+    selectedOperator = "";
 }
 
 function add(num1, num2) {
