@@ -29,6 +29,7 @@
     width: 95%;
     margin-top: 15px;
     height: 125px;
+    overflow: hidden;
 }
 
 .buttons {
@@ -98,4 +99,8 @@
 
 .screen h2 {
     font-size: 42px;
+}
+
+.clicked {
+    border: 4px solid grey;
 }
