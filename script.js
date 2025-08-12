@@ -2,6 +2,7 @@ let num1 = "";
 let num2 = "";
 let total = 0;
 let selectedOperator = "";
+let hasCalculated = false;
 
 const screenText = document.querySelector(".screen h2");
 const clearButton = document.querySelector(".clear");
@@ -21,13 +22,16 @@ const buttons = document.querySelectorAll(".button");
 buttons.forEach((button) => {
     if (button.classList.contains("number")) {
         button.addEventListener("click", () => {
+            if (hasCalculated) {
+                clearScreen();
+            } 
             console.log(button.id);
             operators.forEach((operator) => {
-                if (operator.classList.contains("clicked")) {
-                    operator.classList.remove("clicked");
-                    screenText.textContent = "";
-                }
-            });
+            if (operator.classList.contains("clicked")) {
+                operator.classList.remove("clicked");
+                screenText.textContent = "";
+            }
+        });
             if (selectedOperator === "") {
                 num1 += button.id;
                 screenText.textContent = num1;
@@ -36,6 +40,9 @@ buttons.forEach((button) => {
                 screenText.textContent = num2;
                 previewCalculate();
             }
+            
+
+            
             
         });
     }
@@ -58,15 +65,18 @@ function finalCalculate() {
    num2 = "";
    screenText.textContent = total;
    selectedOperator = "";
+   hasCalculated = true;
 }
 
 
 function clearScreen() {
     screenText.textContent = "";
-    num1 = ""
-    num2 = ""
+    num1 = "";
+    num2 = "";
 
+    total = "";
     selectedOperator = "";
+    hasCalculated = false;
 }
 
 function add(num1, num2) {
